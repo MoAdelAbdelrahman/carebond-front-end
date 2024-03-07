@@ -17,7 +17,7 @@
                         class="border-0">
                         <template>
                             <div class="text-muted text-center mb-3">
-                                <large>Register as</large>
+                                <h4>Register as</h4>
                             </div>
                             <br>
                             <div class="btn-wrapper text-center">

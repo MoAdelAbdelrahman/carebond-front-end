@@ -22,7 +22,8 @@
                         <div class="col-md-6">
                             <label>Email <small class="text-muted">Required</small></label>
                             <base-input alternative placeholder="someone@example.com" v-model="formData.email"
-                                :error="validField.email ? null : invalidEmailFormat ? 'Invalid format': ' '" required></base-input>
+                                :error="validField.email ? null : invalidEmailFormat ? 'Invalid format' : ' '"
+                                required></base-input>
                         </div>
                         <div class="col-md-6">
                             <label>Do you want a nickname? <small class="text-muted">Optional</small></label>
@@ -51,8 +52,9 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <label>Date of Birth <small class="text-muted">Optional</small></label>
+                            <label>Date of Birth <small class="text-muted">Required</small></label>
                             <base-input alternative type="date" placeholder="Date of Birth"
+                                :error="validField.dateOfBirth ? null : ' '"
                                 v-model="formData.dateOfBirth"></base-input>
                         </div>
                         <br>
@@ -73,9 +75,10 @@
                         </div>
                         <div class="col-md-6">
                             <label>Gender <small class="text-muted">Required</small> </label>
-                            <div>
-                                <multiselect v-model="formData.gender" :options="genders">
+                            <div :class="{ 'invalid': validField.gender }">
+                                <multiselect v-model="formData.gender" :allowEmpty="false" :options="genders">
                                 </multiselect>
+                                <label class="" v-show="!validField.gender">Must select a gender!</label>
                             </div>
                         </div>
                     </div>
@@ -113,13 +116,14 @@
                 <!-- Third Page -->
                 <div v-if="currentPage === 3">
                     <form>
-                        <label>Biography, <large class="text-muted">Tell us more about yourself</large></label>
+                        <label>Biography <br>
+                            <span class="text-muted">Tell us more about yourself</span></label>
                         <textarea class="form-control form-control-alternative" rows="3"
                             placeholder="Tell us more about you ..." v-model="formData.biography"></textarea>
                     </form>
                     <br>
                     <br>
-                    <label>You look amazing, add a picture if you want! <large class="text-muted"></large></label>
+                    <label>You look amazing, add a picture if you want! <h3 class="text-muted"></h3></label>
 
                     <div class="pic">
                         <picture-input v-model="formData.picture" ref="formData.picture" width="300" height="300"
@@ -133,6 +137,11 @@
                     <div class="text-center mt-4">
                         <button class="btn btn-danger" @click="goToPage(2)">Back</button>
                         <button class="btn btn-success" @click="submitForm">Submit</button>
+                    </div>
+                </div>
+                <div v-if="currentPage === 4">
+                    <div class="text-center">
+                        <h1>Thank you for registering!</h1>
                     </div>
                 </div>
             </div>
@@ -156,7 +165,6 @@ const isEmptyOrSpaces = (str) => {
 
 const validatePage = (pageNumber, data) => {
     let hasInvalidFields = false;
-
     const validatePage1 = () => {
         if (isEmptyOrSpaces(data.formData.firstName)) {
             data.validField.firstName = false;
@@ -208,6 +216,14 @@ const validatePage = (pageNumber, data) => {
             data.validField.retypePassword = true;
         }
 
+        if (isEmptyOrSpaces(data.formData.dateOfBirth)) {
+            data.validField.dateOfBirth = false;
+            hasInvalidFields = true;
+        }
+        else {
+            data.validField.dateOfBirth = true;
+        }
+
         if (!isEmptyOrSpaces(data.formData.password) && !isEmptyOrSpaces(data.formData.retypePassword)) {
             if (data.formData.password !== data.formData.retypePassword) {
                 data.validField.password = false;
@@ -221,8 +237,17 @@ const validatePage = (pageNumber, data) => {
                 data.retypePasswordRequired = false;
             }
         }
+
+        if (isEmptyOrSpaces(data.formData.gender)) {
+            data.validField.gender = false;
+            hasInvalidFields = true;
+        }
+        else {
+            data.validField.gender = true;
+        }
     }
 
+    console.log(pageNumber)
     switch (pageNumber) {
         case 1:
             validatePage1();
@@ -251,6 +276,7 @@ export default {
             currentPage: 1,
             countries: [],
             genders: ['M', 'F', 'X'],
+            progressValue: 0,
             formData: {
                 email: '',
                 firstName: '',
@@ -275,6 +301,7 @@ export default {
                 password: true,
                 retypePassword: true,
                 dateOfBirth: true,
+                gender: true,
             },
 
             retypePasswordRequired: false,
@@ -311,9 +338,11 @@ export default {
             this.formData.picture = event.target.files[0];
         },
         submitForm() {
-            this.progressValue = 100;
             console.log(this.formData);
             //backend shit
+
+            this.currentPage = 4;
+            this.progressValue = 100;
         },
         onChange(image) {
             console.log('New picture selected!')
@@ -335,6 +364,11 @@ export default {
             )
         }
     },
+
+    computed: {
+
+    },
+
     mounted() {
         this.fetchCountries(); // Fetch countries when the component is mounted
     },
@@ -377,8 +411,8 @@ export default {
     /* Make the card take up to 100% of the container width */
     padding: 20px;
     /* Padding inside the card */
-    
-    
+
+
     /* Margin around the card */
 }
 

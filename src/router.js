@@ -6,7 +6,7 @@ import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
-import seniorForm from "./views/seniorForm.vue";
+import seniorForm from "./views/SeniorForm.vue";
 import seniorHome from "./views/SeniorHome.vue";
 
 Vue.use(Router);

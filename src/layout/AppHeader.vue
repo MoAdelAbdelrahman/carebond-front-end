@@ -11,9 +11,6 @@
                         <img src="img/brand/logo.png">
                     </a>
                 </div>
-                <div class="col-6 collapse-close">
-                    <close-button @click="closeMenu"></close-button>
-                </div>
             </div>
 
             <div v-if="page === 'home'">
