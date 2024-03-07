@@ -23,9 +23,10 @@
                             </div>
                             <br>
                             <div class="btn-wrapper text-center">
-                                <base-button size="lg" type="secondary" @click="goToSeniorForm"> 
-                                <img slot="icon" src="img/icons/common/senior.png" style="width: 50px; height: auto;">     SENIOR   </base-button>
-                               
+                                
+                                <button type="button" class="btn btn-outline-default">
+                                    <img slot="icon" src="img/icons/common/senior.png" style="width: 50px; height: auto;">
+                                    SENIOR</button>
                                         
                                     
                             </div>
@@ -33,10 +34,9 @@
                             
                             <div class="btn-wrapper text-center">
                                 
-                                <base-button size="lg" type="secondary" @click="goToSeniorForm"> 
-                                <img slot="icon" src="img/icons/common/carePro.png" style="width: 50px; height: auto;">CARE PROVIDER</base-button>
-                               
-                                        
+                                <button type="button" class="btn btn-outline-default">
+                                    <img slot="icon" src="img/icons/common/carepro.png"  style="width: 50px; height: auto;">
+                                    CARE PROVIDER</button>
                                         
                                     
                             </div>
