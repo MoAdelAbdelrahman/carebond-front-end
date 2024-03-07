@@ -16,25 +16,39 @@
                 </div>
             </div>
 
-            <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
-                <router-link to="/login" class="nav-link">Login</router-link>
-                <router-link to="/register" class="nav-link">Register</router-link>
-            </ul>
+            <div v-if="page === 'home'">
+                <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+                    <router-link to="/login" class="nav-link">Login</router-link>
+                    <router-link to="/register" class="nav-link">Register</router-link>
+                </ul>
+
+            </div>
+            <div v-if="page === 'back'">
+                <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+                    <router-link to="/register" class="nav-link">Back</router-link>
+                </ul>
+            </div>
         </base-nav>
     </header>
 </template>
+
 <script>
 import BaseNav from "@/components/BaseNav";
-import BaseDropdown from "@/components/BaseDropdown";
-import CloseButton from "@/components/CloseButton";
 
 export default {
-  components: {
-    BaseNav,
-    CloseButton,
-    BaseDropdown
-  }
+    components: {
+        BaseNav,
+    },
+    props: {
+        page: {
+            type: String,
+            default: "home",
+        }
+    },
+    data() {
+        return {};
+    },
 };
 </script>
-<style>
-</style>
+
+<style></style>
