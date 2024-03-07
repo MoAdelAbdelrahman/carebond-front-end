@@ -11,16 +11,16 @@
           <div class="row">
             <div class="col-md-6">
               <label>First Name <small class="text-muted">Required</small></label>
-              <base-input alternative placeholder="First Name" v-model="formData.firstName"></base-input>
+              <base-input alternative placeholder="First Name" v-model="formData.firstName" required></base-input>
             </div>
             
             <div class="col-md-6">
               <label>Last Name <small class="text-muted">Required</small></label>
-              <base-input alternative placeholder="Last Name" v-model="formData.lastName"></base-input>
+              <base-input alternative placeholder="Last Name" v-model="formData.lastName" required></base-input>
             </div>
             <div class="col-md-6">
               <label>email <small class="text-muted">Required</small></label>
-              <base-input alternative placeholder="someone@example.com" v-model="formData.email"></base-input>
+              <base-input alternative placeholder="someone@example.com" v-model="formData.email" required></base-input>
             </div>
             <div class="col-md-6">
               <label>Do you have a nickname? <small class="text-muted">Optional</small></label>
@@ -189,7 +189,7 @@ export default {
         "How comfortable are you with making new friends and initiating conversations?",
         "Rate your level of empathy and understanding towards others' feelings",
         "Rate your tendency to experience negative emotions like sadness, anxiety, and anger.",
-        "How do you assess your communication skills, both listening and speaking?"
+        "How do you assess your communication skills, both listening and speaking?",
       ],
 
     };
