@@ -7,6 +7,7 @@ import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
 import seniorForm from "./views/seniorForm.vue";
+import seniorHome from "./views/SeniorHome.vue";
 
 Vue.use(Router);
 
@@ -85,6 +86,15 @@ export default new Router({
                 header: { page: "back" }
             }
         },
+        {
+          path: "/seniorHome",
+          name: "seniorHome",
+          components: {
+              
+              default: seniorHome,
+              footer: AppFooter
+          },
+        }
 
     ],
     scrollBehavior: to => {
