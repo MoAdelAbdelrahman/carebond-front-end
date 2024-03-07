@@ -22,7 +22,7 @@
                         <div class="col-md-6">
                             <label>Email <small class="text-muted">Required</small></label>
                             <base-input alternative placeholder="someone@example.com" v-model="formData.email"
-                                :error="validField.email ? null : invalidEmailFormat ? 'Invalid format': 'Cannot be empty'" required></base-input>
+                                :error="validField.email ? null : invalidEmailFormat ? 'Invalid format': ' '" required></base-input>
                         </div>
                         <div class="col-md-6">
                             <label>Do you want a nickname? <small class="text-muted">Optional</small></label>
@@ -74,8 +74,8 @@
                         <div class="col-md-6">
                             <label>Gender <small class="text-muted">Required</small> </label>
                             <div>
-                                <select v-model="formData.gender" :options="genders">
-                                </select>
+                                <multiselect v-model="formData.gender" :options="genders">
+                                </multiselect>
                             </div>
                         </div>
                     </div>
@@ -348,6 +348,7 @@ export default {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    max-height: fit-content;
     /* Make it at least as tall as the viewport */
     padding: 20px;
     /* Add some padding around the card */
@@ -363,6 +364,8 @@ export default {
     background: white;
     /* Use your background color */
     border-radius: 8px;
+    max-height: fit-content;
+    margin-top: 60px;
     /* Rounded corners for the card */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     /* A subtle shadow */
@@ -374,7 +377,8 @@ export default {
     /* Make the card take up to 100% of the container width */
     padding: 20px;
     /* Padding inside the card */
-    margin: 20px;
+    
+    
     /* Margin around the card */
 }
 
