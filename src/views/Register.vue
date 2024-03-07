@@ -19,55 +19,29 @@
                           class="border-0">
                         <template>
                             <div class="text-muted text-center mb-3">
-                                <small>Sign in with</small>
+                                <large>Register as</large>
                             </div>
+                            <br>
                             <div class="btn-wrapper text-center">
-                                <base-button type="neutral">
-                                    <img slot="icon" src="img/icons/common/github.svg">
-                                    Github
-                                </base-button>
-
-                                <base-button type="neutral">
-                                    <img slot="icon" src="img/icons/common/google.svg">
-                                    Google
-                                </base-button>
+                                <base-button size="lg" type="secondary" @click="goToSeniorForm"> 
+                                <img slot="icon" src="img/icons/common/senior.png" style="width: 50px; height: auto;">     SENIOR   </base-button>
+                               
+                                        
+                                    
+                            </div>
+                            <br>
+                            
+                            <div class="btn-wrapper text-center">
+                                
+                                <base-button size="lg" type="secondary" @click="goToSeniorForm"> 
+                                <img slot="icon" src="img/icons/common/carePro.png" style="width: 50px; height: auto;">CARE PROVIDER</base-button>
+                               
+                                        
+                                        
+                                    
                             </div>
                         </template>
-                        <template>
-                            <div class="text-center text-muted mb-4">
-                                <small>Or sign up with credentials</small>
-                            </div>
-                            <form role="form">
-                                <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Name"
-                                            addon-left-icon="ni ni-hat-3">
-                                </base-input>
-                                <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Email"
-                                            addon-left-icon="ni ni-email-83">
-                                </base-input>
-                                <base-input alternative
-                                            type="password"
-                                            placeholder="Password"
-                                            addon-left-icon="ni ni-lock-circle-open">
-                                </base-input>
-                                <div class="text-muted font-italic">
-                                    <small>password strength:
-                                        <span class="text-success font-weight-700">strong</span>
-                                    </small>
-                                </div>
-                                <base-checkbox>
-                                    <span>I agree with the
-                                        <a href="#">Privacy Policy</a>
-                                    </span>
-                                </base-checkbox>
-                                <div class="text-center">
-                                    <base-button type="primary" class="my-4">Create account</base-button>
-                                </div>
-                            </form>
-                        </template>
+                        
                     </card>
                 </div>
             </div>
@@ -75,7 +49,15 @@
     </section>
 </template>
 <script>
-export default {};
+
+export default {
+    name: "Register",
+    methods: {
+        goToSeniorForm() {
+            this.$router.push('/seniorForm');
+        }
+    }
+};
 </script>
 <style>
 </style>

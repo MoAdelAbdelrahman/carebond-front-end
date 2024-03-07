@@ -7,6 +7,7 @@ import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
+import seniorForm from "./views/seniorForm.vue";
 
 Vue.use(Router);
 
@@ -57,7 +58,18 @@ export default new Router({
         default: Profile,
         footer: AppFooter
       }
-    }
+    },
+
+    {
+      path: "/seniorForm",
+      name: "seniorForm",
+      components: {
+        header: AppHeader,
+        default: seniorForm,
+        
+      }
+    },
+    
   ],
   scrollBehavior: to => {
     if (to.hash) {
