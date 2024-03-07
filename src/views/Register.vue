@@ -44,8 +44,14 @@
 </template>
 
 <script>
+
 export default {
-    name: "Register"
+    name: "Register",
+    methods: {
+        goToSeniorForm() {
+            this.$router.push('/seniorForm');
+        }
+    }
 };
 </script>
 
