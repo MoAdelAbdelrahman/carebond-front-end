@@ -19,12 +19,8 @@
                     <div class="col px-0">
                         <div class="row">
                             <div class="col-lg-6">
-                                <h1 class="display-3  text-white">A beautiful Design System
-                                    <span>completed with examples</span>
-                                </h1>
-                                <p class="lead  text-white">The design system comes with four pre-built pages to help
-                                    you get started faster. You can change the text and images and you're good to
-                                    go.</p>
+                                <h1 class="display-3  text-white">Elders' instant health and safety keeper.</h1>
+                                <p class="lead  text-white">We provide instant health and safety solution to the elders.</p>
                             </div>
                             <div class="col-lg-6">
                                 <img src="../assets/section1.jpg" alt="Image" class="img-fluid">
@@ -34,7 +30,7 @@
                 </div>
             </section>
             <!-- 1st Hero Variation -->
-            <section class="section-shaped my-1">
+            <section class="section section-lg pt-lg-0 mt-100">
                 <div class="container">
                     <div class="container shape-container d-flex">
                         <div class="col px-0">
@@ -43,10 +39,9 @@
                                     <img src="../assets/section2.png" alt="Image" class="img-fluid">
                                 </div>
                                 <div class="col-lg-6">
-                                    <h1 class="display-3">A beautiful Design System
-                                        <span>completed with examples</span>
+                                    <h1 class="display-3">Customized and flexible nursing appointment
                                     </h1>
-                                    <p class="lead">The design is very human. Very easy to use.</p>
+                                    <p class="lead">Our nurses can meet your customized schedule.</p>
                                 </div>
 
                             </div>
@@ -55,7 +50,7 @@
                 </div>
             </section>
 
-            <section class="section-shaped my-2">
+            <section class="section-shaped mt-100">
                 <div class="shape shape-style-2 shape-default shape-skew">
                     <span></span>
                     <span></span>
@@ -71,12 +66,9 @@
                     <div class="col px-0">
                         <div class="row">
                             <div class="col-lg-6">
-                                <h1 class="display-3  text-white">A beautiful Design System
-                                    <span>completed with examples</span>
+                                <h1 class="display-3  text-white">Match up with the nurse you are most satisfied with
                                 </h1>
-                                <p class="lead  text-white">The design system comes with four pre-built pages to help
-                                    you get started faster. You can change the text and images and you're good to
-                                    go.</p>
+                                <p class="lead  text-white">A variety of nurse options to serve the elderly with different personalities.</p>
                             </div>
                             <div class="col-lg-6">
                                 <img src="../assets/section3.jpg" alt="Image" class="img-fluid">
