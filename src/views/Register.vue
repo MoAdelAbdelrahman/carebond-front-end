@@ -13,41 +13,40 @@
         <div class="container pt-lg-md">
             <div class="row justify-content-center">
                 <div class="col-lg-5">
-                    <card type="secondary" shadow
-                          header-classes="bg-white pb-5"
-                          body-classes="px-lg-5 py-lg-5"
-                          class="border-0">
+                    <card type="secondary" shadow header-classes="bg-white pb-5" body-classes="px-lg-5 py-lg-5"
+                        class="border-0">
                         <template>
                             <div class="text-muted text-center mb-3">
                                 <large>Register as</large>
                             </div>
                             <br>
                             <div class="btn-wrapper text-center">
-                                
-                                <button type="button" class="btn btn-outline-default">
-                                    <img slot="icon" src="img/icons/common/senior.png" style="width: 50px; height: auto;">
-                                    SENIOR</button>
-                                        
-                                    
+
+                                <base-button size="lg" type="secondary" @click="goToSeniorForm">
+                                    <img slot="icon" src="img/icons/common/senior.png"
+                                        style="width: 50px; height: auto;"> SENIOR </base-button>
+
+
                             </div>
                             <br>
-                            
+
                             <div class="btn-wrapper text-center">
-                                
-                                <button type="button" class="btn btn-outline-default">
-                                    <img slot="icon" src="img/icons/common/carepro.png"  style="width: 50px; height: auto;">
-                                    CARE PROVIDER</button>
-                                        
-                                    
+
+                                <base-button size="lg" type="secondary" @click="goToSeniorForm">
+                                    <img slot="icon" src="img/icons/common/carePro.png"
+                                        style="width: 50px; height: auto;">CARE PROVIDER</base-button>
+
+
                             </div>
                         </template>
-                        
+
                     </card>
                 </div>
             </div>
         </div>
     </section>
 </template>
+
 <script>
 
 export default {
@@ -59,5 +58,5 @@ export default {
     }
 };
 </script>
-<style>
-</style>
+
+<style></style>
