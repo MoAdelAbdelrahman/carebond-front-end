@@ -24,16 +24,16 @@
                 <div class="col-md-6">
                     <div class="copyright">
                         &copy; {{year}}
-                        <a href="#" target="_blank" rel="noopener">MM.CS</a> 
+                        <a href="https://linktr.ee/mm.cs" target="_blank" rel="noopener">MM.CS</a> 
                     </div>
                 </div>
                 <div class="col-md-6">
                     <ul class="nav nav-footer justify-content-end">
                         <li class="nav-item">
-                            <a href="#" class="nav-link" target="_blank" rel="noopener">MM.CS</a>
+                            <a href="https://linktr.ee/mm.cs" class="nav-link" target="_blank" rel="noopener">MM.CS</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link" target="_blank" rel="noopener">About
+                            <a href="https://linktr.ee/mm.cs" class="nav-link" target="_blank" rel="noopener">About
                                 Us</a>
                         </li>
                         
