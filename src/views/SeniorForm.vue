@@ -31,20 +31,18 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <label>Country of Birth <small class="text-muted">Optional</small></label>
-                            <div>
-                                <multiselect v-model="formData.countryOfBirth" :options="countries">
-                                </multiselect>
-                            </div>
-
-                        </div>
+                        
                         <div class="col-md-6">
                             <label>Nationality <small class="text-muted">Optional</small> </label>
                             <div>
                                 <multiselect v-model="formData.nationality" :options="countries">
                                 </multiselect>
                             </div>
+                            
+                        </div>
+                        <div class="col-md-6">
+                            <label>Address <small class="text-muted">  </small></label>
+                            <base-input alternative placeholder="address" v-model="formData.address"></base-input>
 
                         </div>
                     </div>
@@ -99,9 +97,9 @@
                     <h6>Please take your time!</h6>
                     <br>
                     <div v-for="(question, index) in personalityQuestions" :key="index" class="slider-container">
-                        <label>{{ question }} <small class="text-muted">Rate from 1 to 100</small></label>
+                        <label>{{ question }} <small class="text-muted">Rate from 1 to 5</small></label>
                         <div class="slider-with-value">
-                            <input type="range" min="1" max="100" v-model="formData.personalityScores[index]"
+                            <input type="range" min="1" max="5" v-model="formData.personalityScores[index]"
                                 class="custom-range">
                             <span class="slider-value">{{ formData.personalityScores[index] }}</span>
                         </div>
@@ -117,9 +115,9 @@
                 <div v-if="currentPage === 3">
                     <form>
                         <label>Biography <br>
-                            <span class="text-muted">Tell us more about yourself</span></label>
+                            <span class="text-muted">Tell us more about yourself, this will help us find you the best provider!</span></label>
                         <textarea class="form-control form-control-alternative" rows="3"
-                            placeholder="Tell us more about you ..." v-model="formData.biography"></textarea>
+                            placeholder="I enjoy watching TV, I am an ongoing person and I am really calm..." v-model="formData.biography"></textarea>
                     </form>
                     <br>
                     <br>
@@ -284,11 +282,11 @@ export default {
                 lastName: '',
                 nickname: '',
                 countryOfBirth: '',
-                nationality: '',
+                address: ' ',
                 dateOfBirth: '',
                 password: '',
-                retypePassword: '',
-                personalityScores: Array(7).fill(0),
+                
+                personalityScores: Array(9).fill(0),
                 biography: '',
                 picture: PictureInput,
 
