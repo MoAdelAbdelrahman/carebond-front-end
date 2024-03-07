@@ -19,6 +19,7 @@
     "vue-multiselect": "^2.1.9",
     "vue-picture-input": "^3.0.1",
     "vue-router": "^3.0.2",
+    "vue-scroll-snap": "^0.1.11",
     "vue-select": "^3.20.2",
     "vue2-transitions": "^0.2.3"
   },

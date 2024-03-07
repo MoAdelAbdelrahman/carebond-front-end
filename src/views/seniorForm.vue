@@ -12,23 +12,21 @@
                         <div class="col-md-6">
                             <label>First Name <small class="text-muted">Required</small></label>
                             <base-input alternative placeholder="First Name" v-model="formData.firstName"
-                                required></base-input>
+                                :error="validField.firstName ? null : ' '" required></base-input>
                         </div>
-
                         <div class="col-md-6">
                             <label>Last Name <small class="text-muted">Required</small></label>
                             <base-input alternative placeholder="Last Name" v-model="formData.lastName"
-                                required></base-input>
+                                :error="validField.lastName ? null : ' '" required></base-input>
                         </div>
                         <div class="col-md-6">
-                            <label>email <small class="text-muted">Required</small></label>
+                            <label>Email <small class="text-muted">Required</small></label>
                             <base-input alternative placeholder="someone@example.com" v-model="formData.email"
-                                required></base-input>
+                                :error="validField.email ? null : invalidEmailFormat ? 'Invalid format': 'Cannot be empty'" required></base-input>
                         </div>
                         <div class="col-md-6">
-                            <label>Do you have a nickname? <small class="text-muted">Optional</small></label>
-                            <base-input alternative placeholder="A name you like to be called with?"
-                                v-model="formData.email"></base-input>
+                            <label>Do you want a nickname? <small class="text-muted">Optional</small></label>
+                            <base-input alternative placeholder="nickname" v-model="formData.nickname"></base-input>
                         </div>
                     </div>
                     <div class="row">
@@ -62,6 +60,7 @@
                         <div class="col-md-6">
                             <label>Password <small class="text-muted">Required</small> </label>
                             <base-input alternative type="password" placeholder="Password"
+                                :error="validField.password ? null : retypePasswordRequired ? 'Passwords do not match' : 'Cannot be empty'"
                                 v-model="formData.password"></base-input>
                         </div>
                     </div>
@@ -69,13 +68,14 @@
                         <div class="col-md-6">
                             <label>Confirm Password <small class="text-muted">Required</small> </label>
                             <base-input alternative type="password" placeholder="Retype Password"
+                                :error="validField.retypePassword ? null : retypePasswordRequired ? 'Passwords do not match' : 'Cannot be empty'"
                                 v-model="formData.retypePassword"></base-input>
                         </div>
                         <div class="col-md-6">
                             <label>Gender <small class="text-muted">Required</small> </label>
                             <div>
-                                <multiselect v-model="formData.gender" :options="genders">
-                                </multiselect>
+                                <select v-model="formData.gender" :options="genders">
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                     <label>You look amazing, add a picture if you want! <large class="text-muted"></large></label>
 
                     <div class="pic">
-                        <picture-input v-model="formData.picture" ref="formData.picture" width="500" height="500"
+                        <picture-input v-model="formData.picture" ref="formData.picture" width="300" height="300"
                             margin="16" accept="image/jpeg,image/png" size="10" button-class="btn" :custom-strings="{
                                 upload: '<h1>Bummer!</h1>',
                                 drag: 'Upload a Picture 😺'
@@ -149,6 +149,97 @@ const { countryList } = require('./static-data/countries.js');
 import Multiselect from 'vue-multiselect'
 
 import 'vue-multiselect/dist/vue-multiselect.min.css';
+
+const isEmptyOrSpaces = (str) => {
+    return str === null || str.match(/^ *$/) !== null;
+}
+
+const validatePage = (pageNumber, data) => {
+    let hasInvalidFields = false;
+
+    const validatePage1 = () => {
+        if (isEmptyOrSpaces(data.formData.firstName)) {
+            data.validField.firstName = false;
+            hasInvalidFields = true;
+        }
+        else {
+            data.validField.firstName = true;
+        }
+
+        if (isEmptyOrSpaces(data.formData.lastName)) {
+            data.validField.lastName = false;
+            hasInvalidFields = true;
+        }
+        else {
+            data.validField.lastName = true;
+        }
+        if (isEmptyOrSpaces(data.formData.email)) {
+            data.validField.email = false;
+            hasInvalidFields = true;
+            data.invalidEmailFormat = false;
+        }
+        else {
+            if (String(data.formData.email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) !== null) {
+                data.validField.email = true;
+                data.invalidEmailFormat = false;
+            }
+            else {
+                hasInvalidFields = true;
+                data.validField.email = false;
+                data.invalidEmailFormat = true;
+            }
+        }
+
+        if (isEmptyOrSpaces(data.formData.password)) {
+            data.validField.password = false;
+            hasInvalidFields = true;
+            data.retypePasswordRequired = false;
+        }
+        else {
+            data.validField.password = true;
+        }
+
+        if (isEmptyOrSpaces(data.formData.retypePassword)) {
+            data.validField.retypePassword = false;
+            hasInvalidFields = true;
+            data.retypePasswordRequired = false;
+        }
+        else {
+            data.validField.retypePassword = true;
+        }
+
+        if (!isEmptyOrSpaces(data.formData.password) && !isEmptyOrSpaces(data.formData.retypePassword)) {
+            if (data.formData.password !== data.formData.retypePassword) {
+                data.validField.password = false;
+                data.validField.retypePassword = false;
+                data.retypePasswordRequired = true;
+                hasInvalidFields = true;
+            }
+            else {
+                data.validField.password = true;
+                data.validField.retypePassword = true;
+                data.retypePasswordRequired = false;
+            }
+        }
+    }
+
+    switch (pageNumber) {
+        case 1:
+            validatePage1();
+            break;
+        case 2:
+            console.log("here2")
+            break;
+        case 3:
+            console.log("here3")
+            break;
+        default:
+            break;
+    }
+
+    return !hasInvalidFields;
+}
+
 export default {
     name: "seniorForm",
     components: {
@@ -163,10 +254,11 @@ export default {
             formData: {
                 email: '',
                 firstName: '',
-                gender: null,
+                gender: 'M',
                 lastName: '',
-                countryOfBirth: 'Canada',
-                nationality: 'Canada',
+                nickname: '',
+                countryOfBirth: '',
+                nationality: '',
                 dateOfBirth: '',
                 password: '',
                 retypePassword: '',
@@ -175,6 +267,18 @@ export default {
                 picture: PictureInput,
 
             },
+
+            validField: {
+                firstName: true,
+                lastName: true,
+                email: true,
+                password: true,
+                retypePassword: true,
+                dateOfBirth: true,
+            },
+
+            retypePasswordRequired: false,
+            invalidEmailFormat: false,
 
             personalityQuestions: [
                 "How much do you enjoy trying new activities and visiting new places?",
@@ -194,8 +298,14 @@ export default {
 
     methods: {
         goToPage(pageNumber) {
-            this.currentPage = pageNumber;
-            this.progressValue = (pageNumber - 1) * 33.3;
+            var result = validatePage(this.currentPage, this);
+            if (result === true) {
+                this.currentPage = pageNumber;
+                this.progressValue = (pageNumber - 1) * 33.3;
+            }
+            else {
+                console.log("Validation failed")
+            }
         },
         handleFileUpload(event) {
             this.formData.picture = event.target.files[0];
@@ -216,9 +326,7 @@ export default {
         },
 
         fetchCountries() {
-            console.log('here');
             this.countries = countryList;
-            console.log(this.countries)
         },
 
         applySearchFilter(search, countries) {
