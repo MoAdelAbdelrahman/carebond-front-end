@@ -87,13 +87,16 @@ export default new Router({
             }
         },
         {
-          path: "/seniorHome",
-          name: "seniorHome",
-          components: {
-              
-              default: seniorHome,
-              footer: AppFooter
-          },
+            path: "/seniorHome",
+            name: "seniorHome",
+            components: {
+                header: AppHeader,
+                default: seniorHome,
+                footer: AppFooter
+            },
+            props: {
+                header: { page: "seniorHome" }
+            }
         }
 
     ],
