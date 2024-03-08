@@ -7,6 +7,7 @@ import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
 import seniorForm from "./views/SeniorForm.vue";
+import nurseForm from "./views/nurseForm.vue";
 import seniorHome from "./views/SeniorHome.vue";
 
 Vue.use(Router);
@@ -87,6 +88,17 @@ export default new Router({
             }
         },
         {
+            path: "/nurseForm",
+            name: "nurseForm",
+            components: {
+                header: AppHeader,
+                default: nurseForm,
+            },
+            props: {
+                header: { page: "back" }
+            }
+        },
+        {
             path: "/seniorHome",
             name: "seniorHome",
             components: {
@@ -94,9 +106,6 @@ export default new Router({
                 default: seniorHome,
                 footer: AppFooter
             },
-            props: {
-                header: { page: "seniorHome" }
-            }
         }
 
     ],
