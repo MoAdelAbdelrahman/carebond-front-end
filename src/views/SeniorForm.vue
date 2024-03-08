@@ -349,16 +349,21 @@ export default {
                 UserType: "Senior",
             }
 
-            const response = await axios.post('https://api.carebond.online/senior/r', 
-            registerBody, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer' + ' ',
-                }
-            });
+            
+    try {
+        const response = await axios.post('https://api.carebond.online/api/senior/r', registerBody, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json',
+            }
+        });
 
-            console.log('here');
-            console.log(response);
+        console.log('Registration successful', response.data);
+        
+    } catch (error) {
+        console.error('Registration failed', error);
+        
+    }
             
         },
         onChange(image) {
