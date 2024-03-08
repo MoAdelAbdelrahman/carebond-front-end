@@ -106,6 +106,9 @@ export default new Router({
                 default: seniorHome,
                 footer: AppFooter
             },
+            props: {
+                header: { page: "seniorHome" }
+            }
         }
 
     ],
