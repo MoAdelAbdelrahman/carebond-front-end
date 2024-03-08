@@ -341,31 +341,39 @@ export default {
             
             this.progressValue = 100;
         },
-        async fetchApi(){
+        async fetchApi() {
+    const registerBody = {
+        Username: this.formData.email,
+        Password: this.formData.password,
+        UserType: "Senior",
+    }
 
-            const registerBody = {
-                Username: this.formData.email,
-                Password: this.formData.password,
-                UserType: "Senior",
-            }
-
-            
     try {
-        const response = await axios.post('https://api.carebond.online/api/senior/r', registerBody, {
+        const response = await fetch('http://api2.carebond.online/api/senior/r', {
+            method: 'POST', 
+            auth: {
+                username: '11163613',
+                password: '60-dayfreetrial',
+                },
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
-            }
+                
+                
+            },
+            body: JSON.stringify(registerBody), // Convert the JavaScript object to a JSON string
         });
 
-        console.log('Registration successful', response.data);
-        
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json(); // Parse JSON response into a JavaScript object
+        console.log('Registration successful', data);
     } catch (error) {
         console.error('Registration failed', error);
-        
     }
-            
-        },
+},
         onChange(image) {
             console.log('New picture selected!')
             if (image) {

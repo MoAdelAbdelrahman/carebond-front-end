@@ -46,6 +46,35 @@
                     </li>
                 </ul>
             </div>
+            <div v-if="page === 'nurseHome'">
+                <ul class="navbar-nav ml-lg-auto">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-icon" href="#">
+                            <i class="ni ni-circle-08"></i>
+                            <span class="nav-link-inner--text">Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-icon" href="#">
+                            <i class="ni ni-collection"></i>
+                            <span class="nav-link-inner--text">Past Appointments</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-icon" href="#">
+                            <i class="ni ni-watch-time"></i>
+                            <span class="nav-link-inner--text">Edit Schedule</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link nav-link-icon" href="#" id="navbar-default_dropdown_1" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="ni ni-settings-gear-65"></i>
+                            <span class="nav-link-inner--text">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </base-nav>
     </header>
 </template>
