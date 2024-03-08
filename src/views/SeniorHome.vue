@@ -1,52 +1,43 @@
 <template>
-    <div>
-       
-        <div style="position: relative">
-<base-nav type="default" effect="dark" expand>
-    <a class="navbar-brand" href="#">Default Color</a>
-
-    <div class="row" slot="content-header" slot-scope="{closeMenu}">
-        <div class="col-6 collapse-brand">
-            <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/">
-                <img src="https://demos.creative-tim.com/vue-argon-design-system/img/brand/blue.png">
-            </a>
+    <section class="section section-shaped section-lg my-0">
+        <div class="shape shape-style-1 bg-gradient-default">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-        <div class="col-6 collapse-close">
-            <close-button @click="closeMenu"></close-button>
-        </div>
-    </div>
 
-    <ul class="navbar-nav ml-lg-auto">
-        <li class="nav-item">
-            <a class="nav-link nav-link-icon" href="#">
-                Discover
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link nav-link-icon" href="#">
-                Profile
-            </a>
-        </li>
-        <base-dropdown tag="li" title="Settings">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Separated link</a>
-        </base-dropdown>
-    </ul>
- </base-nav>
-</div>
+      
+                    <div class="card card-lift--hover shadow border-0">
+                        
+                           <profile/>
+                           <profile/>
+                           <profile/>
+                           <profile/>
 
-    </div>
+                    </div>
+               
+    </section>
 </template>
 
 <script>
-export default {
-    name: "SeniorHome",
-};
+
+import profile from '@/views/Profile.vue'
+
+export default{
+    name: 'SeniorHome',
+    data(){
+        return{
+            
+        }
+    },
+    components: {
+        profile,
+    }
+}
 </script>
-
-<style scoped>
-
-</style>
+  

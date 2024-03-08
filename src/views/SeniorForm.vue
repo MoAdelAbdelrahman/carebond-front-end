@@ -12,12 +12,12 @@
                         <div class="col-md-6">
                             <label>First Name <small class="text-muted">Required</small></label>
                             <base-input alternative placeholder="First Name" v-model="formData.firstName"
-                                :error="validField.firstName ? null : ' '" required></base-input>
+                                :error="validField.firstName ? null : ' '"></base-input>
                         </div>
                         <div class="col-md-6">
                             <label>Last Name <small class="text-muted">Required</small></label>
                             <base-input alternative placeholder="Last Name" v-model="formData.lastName"
-                                :error="validField.lastName ? null : ' '" required></base-input>
+                                :error="validField.lastName ? null : ' '"></base-input>
                         </div>
                         <div class="col-md-6">
                             <label>Email <small class="text-muted">Required</small></label>
