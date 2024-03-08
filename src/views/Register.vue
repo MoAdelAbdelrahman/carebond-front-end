@@ -27,7 +27,7 @@
                             </div>
                             <br>
                             <div class="btn-wrapper text-center">
-                                <base-button size="lg" type="secondary" @click="goToSeniorForm">
+                                <base-button size="lg" type="secondary" @click="goToNurseForm">
                                     <img slot="icon" src="img/icons/common/carePro.png"
                                         style="width: 100px; height: auto;">CARE PROVIDER</base-button>
                             </div>
@@ -47,6 +47,9 @@ export default {
     methods: {
         goToSeniorForm() {
             this.$router.push('/seniorForm');
+        },
+        goToNurseForm(){
+            this.$router.push('/nurseForm');
         }
     }
 };

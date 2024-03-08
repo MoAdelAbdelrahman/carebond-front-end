@@ -79,6 +79,13 @@
                                 <label class="" v-show="!validField.gender">Must select a gender!</label>
                             </div>
                         </div>
+                        <label>Occupation <small class="text-muted">Required</small> </label>
+                            
+                                <multiselect v-model="formData.position" :allowEmpty="false" :options="positions">
+                                </multiselect>
+                                <label class="" v-show="!validField.gender">Must select a position!</label>
+                           
+
                     </div>
 
 
@@ -121,16 +128,27 @@
                     </form>
                     <br>
                     <br>
-                    <label>You look amazing, add a picture if you want! <h3 class="text-muted"></h3></label>
+                    <label>Please add a formal picture <h3 class="text-muted"></h3></label>
 
                     <div class="pic">
                         <picture-input v-model="formData.picture" ref="formData.picture" width="300" height="300"
                             margin="16" accept="image/jpeg,image/png" size="10" button-class="btn" :custom-strings="{
                                 upload: '<h1>Bummer!</h1>',
-                                drag: 'Upload a Picture 😺'
+                                drag: 'Upload a formal picture'
                             }" @change="onChange">
                         </picture-input>
                     </div>
+                    
+                    <br>
+                    <br>
+                    <div>
+                        <label for="certUpload">Please upload your certifications</label>
+<input type="file" id="certUpload" name="certUpload" multiple>
+<div class="text-muted">Supported file types: .pdf, .docx</div>
+
+
+                    </div>
+
                     <br>
                     <div class="text-center mt-4">
                         <button class="btn btn-danger" @click="goToPage(2)">Back</button>
@@ -149,7 +167,6 @@
 
 <script>
 import PictureInput from 'vue-picture-input'
-import axios from 'axios';
 
 const { countryList } = require('./static-data/countries.js');
 
@@ -157,6 +174,7 @@ const { countryList } = require('./static-data/countries.js');
 import Multiselect from 'vue-multiselect'
 
 import 'vue-multiselect/dist/vue-multiselect.min.css';
+
 
 const isEmptyOrSpaces = (str) => {
     return str === null || str.match(/^ *$/) !== null;
@@ -268,13 +286,15 @@ export default {
     name: "seniorForm",
     components: {
         Multiselect,
-        PictureInput
+        PictureInput,
+        
     },
     data() {
         return {
             currentPage: 1,
             countries: [],
             genders: ['M', 'F', 'X'],
+            positions: ['Registred Nurses (RNs)', 'Health Care Aides (HCAs)' ],
             progressValue: 0,
             formData: {
                 email: '',
@@ -286,6 +306,7 @@ export default {
                 address: ' ',
                 dateOfBirth: '',
                 password: '',
+                position: '',
                 personalityScores: Array(9).fill(0),
                 biography: '',
                 picture: PictureInput,
@@ -335,31 +356,11 @@ export default {
             this.formData.picture = event.target.files[0];
         },
         submitForm() {
-            
+            console.log(this.formData);
+            //backend shit
 
-            this.fetchApi();
-            
+            this.currentPage = 4;
             this.progressValue = 100;
-        },
-        async fetchApi(){
-
-            const registerBody = {
-                Username: this.formData.email,
-                Password: this.formData.password,
-                UserType: "Senior",
-            }
-
-            const response = await axios.post('https://api.carebond.online/senior/r', 
-            registerBody, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer' + ' ',
-                }
-            });
-
-            console.log('here');
-            console.log(response);
-            
         },
         onChange(image) {
             console.log('New picture selected!')
