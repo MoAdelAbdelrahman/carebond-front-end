@@ -31,17 +31,17 @@
                         </div>
                     </div>
                     <div class="row">
-                        
+
                         <div class="col-md-6">
                             <label>Nationality <small class="text-muted">Optional</small> </label>
                             <div>
                                 <multiselect v-model="formData.nationality" :options="countries">
                                 </multiselect>
                             </div>
-                            
+
                         </div>
                         <div class="col-md-6">
-                            <label>Address <small class="text-muted">  </small></label>
+                            <label>Address <small class="text-muted"> </small></label>
                             <base-input alternative placeholder="address" v-model="formData.address"></base-input>
 
                         </div>
@@ -79,12 +79,15 @@
                                 <label class="" v-show="!validField.gender">Must select a gender!</label>
                             </div>
                         </div>
-                        <label>Occupation <small class="text-muted">Required</small> </label>
-                            
-                                <multiselect v-model="formData.position" :allowEmpty="false" :options="positions">
-                                </multiselect>
-                                <label class="" v-show="!validField.gender">Must select a position!</label>
-                           
+
+                        <div class="col-md-12">
+                            <label>Occupation <small class="text-muted">Required</small> </label>
+
+                            <multiselect v-model="formData.position" :allowEmpty="false" :options="positions">
+                            </multiselect>
+                            <label class="" v-show="!validField.gender">Must select a position!</label>
+                        </div>
+
 
                     </div>
 
@@ -122,9 +125,11 @@
                 <div v-if="currentPage === 3">
                     <form>
                         <label>Biography <br>
-                            <span class="text-muted">Tell us more about yourself, this will help us find you the best provider!</span></label>
+                            <span class="text-muted">Tell us more about yourself, this will help us find you the best
+                                provider!</span></label>
                         <textarea class="form-control form-control-alternative" rows="3"
-                            placeholder="I enjoy watching TV, I am an ongoing person and I am really calm..." v-model="formData.biography"></textarea>
+                            placeholder="I enjoy watching TV, I am an ongoing person and I am really calm..."
+                            v-model="formData.biography"></textarea>
                     </form>
                     <br>
                     <br>
@@ -133,18 +138,18 @@
                     <div class="pic">
                         <picture-input v-model="formData.picture" ref="formData.picture" width="300" height="300"
                             margin="16" accept="image/jpeg,image/png" size="10" button-class="btn" :custom-strings="{
-                                upload: '<h1>Bummer!</h1>',
-                                drag: 'Upload a formal picture'
-                            }" @change="onChange">
+                    upload: '<h1>Bummer!</h1>',
+                    drag: 'Upload a formal picture'
+                }" @change="onChange">
                         </picture-input>
                     </div>
-                    
+
                     <br>
                     <br>
                     <div>
                         <label for="certUpload">Please upload your certifications</label>
-<input type="file" id="certUpload" name="certUpload" multiple>
-<div class="text-muted">Supported file types: .pdf, .docx</div>
+                        <input type="file" id="certUpload" name="certUpload" multiple>
+                        <div class="text-muted">Supported file types: .pdf, .docx</div>
 
 
                     </div>
@@ -287,14 +292,14 @@ export default {
     components: {
         Multiselect,
         PictureInput,
-        
+
     },
     data() {
         return {
             currentPage: 1,
             countries: [],
             genders: ['M', 'F', 'X'],
-            positions: ['Registred Nurses (RNs)', 'Health Care Aides (HCAs)' ],
+            positions: ['Registred Nurses (RNs)', 'Health Care Aides (HCAs)'],
             progressValue: 0,
             formData: {
                 email: '',
