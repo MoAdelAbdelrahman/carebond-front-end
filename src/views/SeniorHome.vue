@@ -11,32 +11,28 @@
             <span></span>
         </div>
 
-      
-                    <div class="card card-lift--hover shadow border-0">
-                        
-                           <profile/>
-                           <profile/>
-                           <profile/>
-                           <profile/>
-
-                    </div>
-               
+        <div class="container">
+            <div class="row justify-content-center">
+                <cardprofile/>
+            </div>
+        </div>
     </section>
 </template>
 
 <script>
 
-import profile from '@/views/Profile.vue'
+import cardprofile from './components/CardProfile.vue'
 
-export default{
+export default {
     name: 'SeniorHome',
-    data(){
-        return{
-            
+    data() {
+        'img/theme/pic.jpg'
+        return {
+
         }
     },
     components: {
-        profile,
+        cardprofile,
     }
 }
 </script>
