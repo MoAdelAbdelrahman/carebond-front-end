@@ -25,8 +25,17 @@
                             </div>
                             <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
                                 <div class="card-profile-actions py-4 mt-lg-0">
-                                    <base-button type="info" size="sm" class="mr-4">Book an appoitment</base-button>
-                                    <base-button type="default" size="sm" class="float-right">Message</base-button>
+                                    <button type="info" size="sm" class="mr-4" data-toggle="modal" data-target="appointmentModelLong">Book an appointment</button>
+                                    
+
+                                    <div class="modal fade bd-example-modal-lg" id="appointmentModelLong" tabindex="-1" role="dialog"
+                                        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                ...
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 order-lg-1">
@@ -35,7 +44,7 @@
                                         <span class="heading">22</span>
                                         <span class="description">Clients</span>
                                     </div>
-                                    
+
                                     <div>
                                         <span class="heading">4.5</span>
                                         <span class="description">Rating</span>
@@ -49,13 +58,14 @@
                             </h3>
                             <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>Edmonton, Canada</div>
                             <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Registred Nurse </div>
-                            
+
                         </div>
                         <div class="mt-5 py-5 border-top text-center">
                             <div class="row justify-content-center">
                                 <div class="col-lg-9">
-                                    <p>An artist of considerable range, Laila — the name taken by Cairo-raised, Edmonton-based — writes, performs crazy, and gad3a fash5 (description)</p>
-                                   
+                                    <p>An artist of considerable range, Laila — the name taken by Cairo-raised,
+                                        Edmonton-based — writes, performs crazy, and gad3a fash5 (description)</p>
+
                                 </div>
                             </div>
                         </div>
@@ -70,5 +80,4 @@ export default {
     name: "Profile",
 };
 </script>
-<style>
-</style>
+<style></style>
