@@ -31,17 +31,17 @@
                         </div>
                     </div>
                     <div class="row">
-                        
+
                         <div class="col-md-6">
                             <label>Nationality <small class="text-muted">Optional</small> </label>
                             <div>
                                 <multiselect v-model="formData.nationality" :options="countries">
                                 </multiselect>
                             </div>
-                            
+
                         </div>
                         <div class="col-md-6">
-                            <label>Address <small class="text-muted">  </small></label>
+                            <label>Address <small class="text-muted"> </small></label>
                             <base-input alternative placeholder="address" v-model="formData.address"></base-input>
 
                         </div>
@@ -115,9 +115,11 @@
                 <div v-if="currentPage === 3">
                     <form>
                         <label>Biography <br>
-                            <span class="text-muted">Tell us more about yourself, this will help us find you the best provider!</span></label>
+                            <span class="text-muted">Tell us more about yourself, this will help us find you the best
+                                provider!</span></label>
                         <textarea class="form-control form-control-alternative" rows="3"
-                            placeholder="I enjoy watching TV, I am an ongoing person and I am really calm..." v-model="formData.biography"></textarea>
+                            placeholder="I enjoy watching TV, I am an ongoing person and I am really calm..."
+                            v-model="formData.biography"></textarea>
                     </form>
                     <br>
                     <br>
@@ -126,15 +128,22 @@
                     <div class="pic">
                         <picture-input v-model="formData.picture" ref="formData.picture" width="300" height="300"
                             margin="16" accept="image/jpeg,image/png" size="10" button-class="btn" :custom-strings="{
-                                upload: '<h1>Bummer!</h1>',
-                                drag: 'Upload a Picture 😺'
-                            }" @change="onChange">
+                    upload: '<h1>Bummer!</h1>',
+                    drag: 'Upload a Picture 😺'
+                }" @change="onChange">
                         </picture-input>
                     </div>
                     <br>
                     <div class="text-center mt-4">
                         <button class="btn btn-danger" @click="goToPage(2)">Back</button>
-                        <button class="btn btn-success" @click="submitForm">Submit</button>
+                        <button class="btn btn-success" @click="submitForm">
+                            <span v-if="isLoading">
+                                <i class="fa fa-spinner fa-spin"></i> Submitting...
+                            </span>
+                            <span v-else>
+                                Submit
+                            </span>
+                        </button>
                     </div>
                 </div>
                 <div v-if="currentPage === 4">
@@ -315,7 +324,8 @@ export default {
                 "Rate your tendency to experience negative emotions like sadness, anxiety, and anger.",
                 "How do you assess your communication skills, both listening and speaking?",
             ],
-
+            
+            isLoading: false,
         };
     },
 
@@ -335,47 +345,47 @@ export default {
             this.formData.picture = event.target.files[0];
         },
         submitForm() {
-            
-
+            this.isLoading = true;
             this.fetchApi();
-            
-            this.progressValue = 100;
         },
         async fetchApi() {
-    const registerBody = {
-        Username: this.formData.email,
-        Password: this.formData.password,
-        UserType: "Senior",
-    }
+            // const registerBody = {
+            //     Username: this.formData.email,
+            //     Password: this.formData.password,
+            //     UserType: "Senior",
+            // }
 
-    try {
+            try {
 
-        var data = {
-                Username: this.formData.email,
-                Password: this.formData.password,
-                UserType: "Senior",
-            }
-            // Set username and password
-            const username = '11163613';
-            const password = '60-dayfreetrial';
-            // Encode username and password in base64
-            const encoded = Buffer.from(username + ':' + password).toString('base64');
-            const response = await axios.post('https://corsproxy.io/?https://api2.carebond.online//api//Senior//r',
-            data,
-            {
-                headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + encoded
+                var data = {
+                    Username: this.formData.email,
+                    Password: this.formData.password,
+                    UserType: "Senior",
                 }
+                // Set username and password
+                const username = '11163613';
+                const password = '60-dayfreetrial';
+                // Encode username and password in base64
+                const encoded = Buffer.from(username + ':' + password).toString('base64');
+                const response = await axios.post('https://corsproxy.io/?https://api2.carebond.online//api//Senior//r',
+                    data,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Basic ' + encoded
+                        }
+                    }
+
+                );
+                console.log('Registration successful', response);
+                this.currentPage = 4;
+                this.progressValue = 100;
+            } catch (error) {
+                console.error('Registration failed', error);
             }
-            
-            );
-            console.log('Registration successful', response);   
-        
-    } catch (error) {
-        console.error('Registration failed', error);
-    }
-},
+
+            this.isLoading = false;
+        },
         onChange(image) {
             console.log('New picture selected!')
             if (image) {
