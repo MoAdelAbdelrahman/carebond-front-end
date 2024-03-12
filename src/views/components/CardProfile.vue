@@ -7,11 +7,15 @@
                         <div class="px-4">
                             <div class="card-profile-image text-center">
                                 <img v-lazy="profileImagePath" alt="Profile Image" class="img-fluid rounded-circle"
-                                    style="width: 100px; height: 100px; margin-top: 10px;">
+                                    style="width: 100px; height: 100px; margin-top: 40px;">
                             </div>
                             <div class="card-body">
                                 <div class="text-center">
                                     <h3 class="card-title" style="font-size: 24px; font-weight: 600;">{{ profileName }}</h3>
+                                </div>
+
+                                <div class="text-center">
+                                    <h3 class="card-title" style="font-size: 20px; font-weight: 600; font-weight: lighter;">{{ position }}</h3>
                                 </div>
                                 <div class="row">
                                     <div class="col text-center">
@@ -37,11 +41,34 @@
     </div>
 </template>
 
-<script setup>
-defineProps({
-    profileName: String,
-    profileImagePath: String,
-    clientCount: Number,
-    rating: Number
-})
+<script>
+export default {
+    name: "CardProfile",
+    props: {
+        profileImagePath: {
+            type: String,
+            required: true
+        },
+        profileName: {
+            type: String,
+            required: true
+        },
+        clientCount: {
+            type: Number,
+            required: true
+        },
+        rating: {
+            type: Number,
+            required: true
+        },
+        position: {
+            type: String,
+            required: true
+        }
+    },
+
+}
+
+
+
 </script>
