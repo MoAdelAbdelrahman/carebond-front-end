@@ -99,7 +99,7 @@
                     <div v-for="(question, index) in personalityQuestions" :key="index" class="slider-container">
                         <label>{{ question }} <small class="text-muted">Rate from 1 to 5</small></label>
                         <div class="slider-with-value">
-                            <input type="range" min="1" max="5" v-model="formData.personalityScores[index]"
+                            <input type="range" min=1 max=5 v-model="formData.personalityScores[index]"
                                 class="custom-range">
                             <span class="slider-value">{{ formData.personalityScores[index] }}</span>
                         </div>
@@ -312,6 +312,7 @@ export default {
 
             retypePasswordRequired: false,
             invalidEmailFormat: false,
+            registrationFailed: false,
 
             personalityQuestions: [
                 "How much do you enjoy trying new activities and visiting new places?",
@@ -346,28 +347,25 @@ export default {
         },
         submitForm() {
             this.isLoading = true;
-            this.fetchApi();
+            this.formData.personalityScores = this.formData.personalityScores.map(element => parseInt(element));
+            console.log(this.formData)
+            // this.fetchApi();
         },
         async fetchApi() {
-            // const registerBody = {
-            //     Username: this.formData.email,
-            //     Password: this.formData.password,
-            //     UserType: "Senior",
-            // }
 
             try {
 
                 var data = {
                     Username: this.formData.email,
                     Password: this.formData.password,
-                    UserType: "Senior",
+                    UserType: "Senior"
                 }
                 // Set username and password
                 const username = '11163613';
                 const password = '60-dayfreetrial';
                 // Encode username and password in base64
                 const encoded = Buffer.from(username + ':' + password).toString('base64');
-                const response = await axios.post('https://corsproxy.io/?https://api2.carebond.online//api//Senior//r',
+                var response = await axios.post('https://corsproxy.io/?https://api2.carebond.online//api//Senior//r',
                     data,
                     {
                         headers: {
@@ -377,11 +375,42 @@ export default {
                     }
 
                 );
+
+                 
+                
+                const token = response.data.Token;
+                const id = response.data.ID;
+                data = {
+                    ID: id,
+                    Username: this.formData.email,
+                    Password: this.formData.password,
+                    FirstName: this.formData.firstName,
+                    LastName: this.formData.lastName,
+                    PreferedName: this.formData.nickname,
+                    Nationality: this.formData.nationality,
+                    PersonalityScores: this.formData.personalityScores,
+                    Address: this.formData.address,
+                    Gender: this.formData.gender,
+                    MedicalConditions: this.formData.biography,
+                    Approved: true
+                }
+
+                response = await axios.put(`https://corsproxy.io/?https://api2.carebond.online//api//Senior//${token}//${id}//`,   
+                    data,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Basic ' + encoded
+                        }
+                    }
+                );
+
                 console.log('Registration successful', response);
                 this.currentPage = 4;
                 this.progressValue = 100;
             } catch (error) {
                 console.error('Registration failed', error);
+                this.registrationFailed = true;
             }
 
             this.isLoading = false;
