@@ -162,7 +162,8 @@
                 </div>
                 <div v-if="currentPage === 4">
                     <div class="text-center">
-                        <h1>Thank you for registering!</h1>
+                        <i class="ni ni-satisfied ni-3x"></i>
+                        <h1 class="font-bold text-3xl">Thank you for registering!</h1>
                     </div>
                 </div>
             </div>

@@ -23,49 +23,42 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
+                            <div class="row-lg-4 order-lg-3 text-lg-right align-self-lg-center">
                                 <div class="card-profile-actions py-4 mt-lg-0">
-                                    <button type="info" size="sm" class="mr-4" data-toggle="modal" data-target="appointmentModelLong">Book an appointment</button>
-                                    
+                                <base-button :type="buttonType" icon="ni ni-briefcase-24" @click="toggleModal"> Book appointment</base-button>
+                                  
+                            </div>
+                            <div>
+                                <Modal v-if="showModal" :name="name" @close="toggleModal"></Modal>
 
-                                    <div class="modal fade bd-example-modal-lg" id="appointmentModelLong" tabindex="-1" role="dialog"
-                                        aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                ...
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            </div>
                             </div>
                             <div class="col-lg-4 order-lg-1">
                                 <div class="card-profile-stats d-flex justify-content-center">
                                     <div>
-                                        <span class="heading">22</span>
+                                        <span class="heading">{{clientsCount}}</span>
                                         <span class="description">Clients</span>
                                     </div>
 
                                     <div>
-                                        <span class="heading">4.5</span>
+                                        <span class="heading">{{rating}}</span>
                                         <span class="description">Rating</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="text-center mt-5">
-                            <h3>Laila Korayem
-                                <span class="font-weight-light">, 27</span>
+                            <h3>{{name}}
+                                <span class="font-weight-light">{{age}}</span>
                             </h3>
                             <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>Edmonton, Canada</div>
-                            <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>Registred Nurse </div>
+                            <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{postion}} </div>
 
                         </div>
                         <div class="mt-5 py-5 border-top text-center">
                             <div class="row justify-content-center">
                                 <div class="col-lg-9">
-                                    <p>An artist of considerable range, Laila — the name taken by Cairo-raised,
-                                        Edmonton-based — writes, performs crazy, and gad3a fash5 (description)</p>
-
+                                    <p>{{description}}</p>
                                 </div>
                             </div>
                         </div>
@@ -75,9 +68,39 @@
         </section>
     </div>
 </template>
+
 <script>
+import Modal from './Modal.vue';
+
 export default {
     name: "Profile",
+    data(){
+        return{
+            id: 1,
+            name: 'John Doe',
+            clientsCount: 12,
+            rating: 4.5,
+            age: 12,
+            postion: 'some shit',
+            description: 'Some shit 2',
+            showModal: false,
+            buttonType: "primary",
+            showBookingConfirmationModal: false,
+            bookingMessage: '',
+        }
+    },
+    components:{
+        Modal,
+    },
+    methods:{
+        toggleModal() {
+        this.showModal = !this.showModal;
+        this.buttonType = this.buttonType === 'primary' ? 'secondary' : 'primary';
+        
+    },
+    
+    }
+    
 };
 </script>
 <style></style>

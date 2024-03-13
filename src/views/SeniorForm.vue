@@ -160,6 +160,8 @@
 import PictureInput from 'vue-picture-input'
 import axios from 'axios';
 
+const url = 'https://sbeve.moo.com/api/'
+
 const { countryList } = require('./static-data/countries.js');
 
 
@@ -349,37 +351,28 @@ export default {
             this.fetchApi();
         },
         async fetchApi() {
-            // const registerBody = {
-            //     Username: this.formData.email,
-            //     Password: this.formData.password,
-            //     UserType: "Senior",
-            // }
+            
+            const registerLink = url + 'register/';
+            const currentYear = new Date().getFullYear();
+            var data = {
+                username: this.formData.email,
+                first_name: this.formData.firstName,
+                last_name: this.formData.lastName,
+                nickname: this.formData.nickname,
+                nationality: this.formData.nationality,
+                address: this.formData.address,
+                biography: this.formData.biography,
+                user_type: 'elder',
+                age: currentYear - parseInt(this.formData.dateOfBirth.split('-')[0]),  
+                country_of_birth: this.formData.countryOfBirth,
+                address: this.formData.address,
+                date_of_birth: this.formData.dateOfBirth,
+                password: this.formData.password,
+            }
 
             try {
-
-                var data = {
-                    Username: this.formData.email,
-                    Password: this.formData.password,
-                    UserType: "Senior",
-                }
-                // Set username and password
-                const username = '11163613';
-                const password = '60-dayfreetrial';
-                // Encode username and password in base64
-                const encoded = Buffer.from(username + ':' + password).toString('base64');
-                const response = await axios.post('https://corsproxy.io/?https://api2.carebond.online//api//Senior//r',
-                    data,
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Basic ' + encoded
-                        }
-                    }
-
-                );
-                console.log('Registration successful', response);
-                this.currentPage = 4;
-                this.progressValue = 100;
+                const respone = axios.post('', data);
+               
             } catch (error) {
                 console.error('Registration failed', error);
             }
