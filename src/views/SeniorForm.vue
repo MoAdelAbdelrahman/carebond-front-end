@@ -41,7 +41,7 @@
 
                         </div>
                         <div class="col-md-6">
-                            <label>Address <small class="text-muted"> </small></label>
+                            <label>Address <small class="text-muted">Required</small></label>
                             <base-input alternative placeholder="address" v-model="formData.address"></base-input>
 
                         </div>
@@ -52,7 +52,7 @@
                         <div class="col-md-6">
                             <label>Date of Birth <small class="text-muted">Required</small></label>
                             <base-input alternative type="date" placeholder="Date of Birth"
-                                :error="validField.dateOfBirth ? null : ' '"
+                                :error="validField.dateOfBirth ? null : 'Invalid Date of Birth'"
                                 v-model="formData.dateOfBirth"></base-input>
                         </div>
                         <br>
@@ -130,7 +130,7 @@
                             margin="16" accept="image/jpeg,image/png" size="10" button-class="btn" :custom-strings="{
                     upload: '<h1>Bummer!</h1>',
                     drag: 'Upload a Picture 😺'
-                }" @change="onChange">
+                }">
                         </picture-input>
                     </div>
                     <br>
@@ -160,7 +160,7 @@
 import PictureInput from 'vue-picture-input'
 import axios from 'axios';
 
-const url = 'https://sbeve.moo.com/api/'
+const url = 'https://sbeve.mooo.com/api/'
 
 const { countryList } = require('./static-data/countries.js');
 
@@ -232,6 +232,19 @@ const validatePage = (pageNumber, data) => {
         }
         else {
             data.validField.dateOfBirth = true;
+        }
+
+        if (!isEmptyOrSpaces(data.formData.dateOfBirth)) {
+            const date = new Date(data.formData.dateOfBirth);
+            const today = new Date();
+
+            if (date.getUTCFullYear() >= today.getUTCFullYear()) {
+                data.validField.dateOfBirth = false;
+                hasInvalidFields = true;
+            }
+            else {
+                data.validField.dateOfBirth = true;
+            }
         }
 
         if (!isEmptyOrSpaces(data.formData.password) && !isEmptyOrSpaces(data.formData.retypePassword)) {
@@ -327,7 +340,7 @@ export default {
                 "Rate your tendency to experience negative emotions like sadness, anxiety, and anger.",
                 "How do you assess your communication skills, both listening and speaking?",
             ],
-            
+
             isLoading: false,
         };
     },
@@ -354,9 +367,10 @@ export default {
             this.fetchApi();
         },
         async fetchApi() {
-            
+
             const registerLink = url + 'register/';
-            const currentYear = new Date().getFullYear();
+            const currentDate = new Date();
+            var dateOfBirth = new Date(this.formData.dateOfBirth)
             var data = {
                 username: this.formData.email,
                 first_name: this.formData.firstName,
@@ -366,23 +380,52 @@ export default {
                 address: this.formData.address,
                 biography: this.formData.biography,
                 user_type: 'elder',
-                age: currentYear - parseInt(this.formData.dateOfBirth.split('-')[0]),  
-                country_of_birth: this.formData.countryOfBirth,
+                age: parseInt(currentDate.getUTCFullYear()) - parseInt(dateOfBirth.getUTCFullYear()),
+
                 address: this.formData.address,
                 date_of_birth: this.formData.dateOfBirth,
+                personality_traits: this.formData.personalityScores,
                 password: this.formData.password,
+                gender: this.formData.gender,
+            }
+
+
+            if (this.formData.picture) {
+                console.log("This")
+                console.log(this.formData.picture)
+                var reader = new FileReader();
+                var image_b64 = '';
+                reader.onload = function (e) {
+                    image_b64 = e.target.result;
+                }
+                reader.readAsBinaryString(this.formData.picture);
+                console.log(image_b64)
             }
 
             try {
-                const respone = axios.post('', data);
-               
+                axios.post(registerLink, data).then(response => {
+                    var token = response.data.token;
+                    // upload picture, if any
+
+                    this.currentPage = 4;
+                    this.progressValue = 100;
+                    this.isLoading = false;
+                });
+
             } catch (error) {
                 console.error('Registration failed', error);
                 this.registrationFailed = true;
             }
 
-            this.isLoading = false;
+            // if (profilePicture.picture) {
+            //     var reader = new FileReader();
+            //     var profilePicture = reader.readAsDataURL(this.formData.picture);
+            // }
+
         },
+
+
+
         onChange(image) {
             console.log('New picture selected!')
             if (image) {

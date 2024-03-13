@@ -6,7 +6,7 @@ import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
-import seniorForm from "./views/SeniorForm.vue";
+import SeniorForm from "./views/SeniorForm.vue";
 import nurseForm from "./views/nurseForm.vue";
 import seniorHome from "./views/SeniorHome.vue";
 import nurseHome from "./views/nurseHome.vue";
@@ -82,7 +82,7 @@ export default new Router({
             name: "seniorForm",
             components: {
                 header: AppHeader,
-                default: seniorForm,
+                default: SeniorForm,
             },
             props: {
                 header: { page: "back" }
