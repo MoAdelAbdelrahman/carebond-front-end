@@ -99,7 +99,7 @@
                     <div v-for="(question, index) in personalityQuestions" :key="index" class="slider-container">
                         <label>{{ question }} <small class="text-muted">Rate from 1 to 5</small></label>
                         <div class="slider-with-value">
-                            <input type="range" min="1" max="5" v-model="formData.personalityScores[index]"
+                            <input type="range" min=1 max=5 v-model="formData.personalityScores[index]"
                                 class="custom-range">
                             <span class="slider-value">{{ formData.personalityScores[index] }}</span>
                         </div>
@@ -314,6 +314,7 @@ export default {
 
             retypePasswordRequired: false,
             invalidEmailFormat: false,
+            registrationFailed: false,
 
             personalityQuestions: [
                 "How much do you enjoy trying new activities and visiting new places?",
@@ -348,6 +349,8 @@ export default {
         },
         submitForm() {
             this.isLoading = true;
+            this.formData.personalityScores = this.formData.personalityScores.map(element => parseInt(element));
+            console.log(this.formData)
             this.fetchApi();
         },
         async fetchApi() {
@@ -375,6 +378,7 @@ export default {
                
             } catch (error) {
                 console.error('Registration failed', error);
+                this.registrationFailed = true;
             }
 
             this.isLoading = false;
