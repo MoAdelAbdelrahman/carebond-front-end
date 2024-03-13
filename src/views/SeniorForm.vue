@@ -126,22 +126,13 @@
                     <label>You look amazing, add a picture if you want! <h3 class="text-muted"></h3></label>
 
                     <div class="pic">
-                    
-                        <picture-input 
-    v-model="formData.picture"
-      ref="formData.picture"
-      width="300" 
-      height="300" 
-      margin="16" 
-      accept="image/jpeg,image/png" 
-      size="10" 
-      button-class="btn"
-      :custom-strings="{
-        upload: '<h1>Bummer!</h1>',
-        drag: 'Select a picture 😺 '
-      }"
-      @change="onChange">
-    </picture-input>
+
+                        <picture-input ref="pictureInput" width="300" height="300" margin="16"
+                            accept="image/jpeg,image/png" size="10" :removable="true" :customStrings="{
+                    upload: '<h1>Bummer!</h1>',
+                    drag: 'Drag a 😺 GIF or GTFO',
+                }">
+                        </picture-input>
 
                     </div>
                     <br>
@@ -168,7 +159,7 @@
 </template>
 
 <script>
-import PictureInput from 'vue-picture-input'
+import PictureInput from 'vue-picture-input';
 import axios from 'axios';
 
 const url = 'https://sbeve.mooo.com/api/'
@@ -302,8 +293,8 @@ const validatePage = (pageNumber, data) => {
 export default {
     name: "seniorForm",
     components: {
-        Multiselect,
-        PictureInput
+        PictureInput,
+        Multiselect
     },
     data() {
         return {
@@ -324,7 +315,7 @@ export default {
                 personalityScores: Array(9).fill(0),
                 biography: '',
                 picture: File,
-                
+
             },
             base64_img: '',
 
@@ -374,35 +365,13 @@ export default {
             this.formData.picture = event.target.files[0];
         },
         submitForm() {
-            this.progressValue = 100;
-    this.isLoading = true;
-    var picture = this.formData.picture; 
-    
-    // Check if there is a picture to convert
-    if (picture) {
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            this.base64_img = reader.result;
+            this.isLoading = true;
+            this.base64_img = this.$refs.pictureInput.image;
             this.formData.personalityScores = this.formData.personalityScores.map(element => parseInt(element));
-            console.log(this.formData);
             this.fetchApi();
-        };
+        },
 
-        
-        reader.readAsDataURL(picture);
-    } else {
-       
-        this.formData.personalityScores = this.formData.personalityScores.map(element => parseInt(element));
-        
-        console.log(this.formData);
-        
-        
-        this.fetchApi();
-    }
-},
         async fetchApi() {
-
             const registerLink = url + 'register/';
             const currentDate = new Date();
             var dateOfBirth = new Date(this.formData.dateOfBirth)
@@ -416,7 +385,6 @@ export default {
                 biography: this.formData.biography,
                 user_type: 'elder',
                 age: parseInt(currentDate.getUTCFullYear()) - parseInt(dateOfBirth.getUTCFullYear()),
-
                 address: this.formData.address,
                 date_of_birth: this.formData.dateOfBirth,
                 personality_traits: this.formData.personalityScores,
@@ -424,46 +392,32 @@ export default {
                 gender: this.formData.gender,
             }
 
-
-            
-
             try {
                 axios.post(registerLink, data).then(response => {
                     var token = response.data.token;
                     // upload picture, if any
-
-                    this.currentPage = 4;
-                    this.progressValue = 100;
-                    this.isLoading = false;
+                    if (this.base64_img) {
+                        const config = {
+                            headers: {
+                                'content-type': 'application/json',
+                                'Authorization': 'Token ' + token
+                            }
+                        }
+                        axios.post(url + 'upload_picture/', {
+                            picture: this.base64_img
+                        }, config).then(response => {
+                            this.currentPage = 4;
+                            this.progressValue = 100;
+                            this.isLoading = false;
+                        });
+                    }
                 });
 
             } catch (error) {
                 console.error('Registration failed', error);
                 this.registrationFailed = true;
             }
-
-            // if (profilePicture.picture) {
-            //     var reader = new FileReader();
-            //     var profilePicture = reader.readAsDataURL(this.formData.picture);
-            // }
-
         },
-
-
-
-       
-
-            
-        onChange (image) {
-      console.log('New picture selected!')
-      if (image) {
-        console.log('Picture loaded.')
-        this.image = image
-      } else {
-        console.log('FileReader API not supported: use the <form>, Luke!')
-      }
-    } ,
-       
 
         fetchCountries() {
             this.countries = countryList;
