@@ -126,12 +126,23 @@
                     <label>You look amazing, add a picture if you want! <h3 class="text-muted"></h3></label>
 
                     <div class="pic">
-                        <picture-input v-model="formData.picture" ref="formData.picture" width="300" height="300"
-                            margin="16" accept="image/jpeg,image/png" size="10" button-class="btn" :custom-strings="{
-                    upload: '<h1>Bummer!</h1>',
-                    drag: 'Upload a Picture 😺'
-                }">
-                        </picture-input>
+                    
+                        <picture-input 
+    v-model="formData.picture"
+      ref="formData.picture"
+      width="300" 
+      height="300" 
+      margin="16" 
+      accept="image/jpeg,image/png" 
+      size="10" 
+      button-class="btn"
+      :custom-strings="{
+        upload: '<h1>Bummer!</h1>',
+        drag: 'Select a picture 😺 '
+      }"
+      @change="onChange">
+    </picture-input>
+
                     </div>
                     <br>
                     <div class="text-center mt-4">
@@ -312,8 +323,10 @@ export default {
                 password: '',
                 personalityScores: Array(9).fill(0),
                 biography: '',
-                picture: PictureInput,
+                picture: File,
+                
             },
+            base64_img: '',
 
             validField: {
                 firstName: true,
@@ -361,11 +374,33 @@ export default {
             this.formData.picture = event.target.files[0];
         },
         submitForm() {
-            this.isLoading = true;
+            this.progressValue = 100;
+    this.isLoading = true;
+    var picture = this.formData.picture; 
+    
+    // Check if there is a picture to convert
+    if (picture) {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            this.base64_img = reader.result;
             this.formData.personalityScores = this.formData.personalityScores.map(element => parseInt(element));
-            console.log(this.formData)
+            console.log(this.formData);
             this.fetchApi();
-        },
+        };
+
+        
+        reader.readAsDataURL(picture);
+    } else {
+       
+        this.formData.personalityScores = this.formData.personalityScores.map(element => parseInt(element));
+        
+        console.log(this.formData);
+        
+        
+        this.fetchApi();
+    }
+},
         async fetchApi() {
 
             const registerLink = url + 'register/';
@@ -390,17 +425,7 @@ export default {
             }
 
 
-            if (this.formData.picture) {
-                console.log("This")
-                console.log(this.formData.picture)
-                var reader = new FileReader();
-                var image_b64 = '';
-                reader.onload = function (e) {
-                    image_b64 = e.target.result;
-                }
-                reader.readAsBinaryString(this.formData.picture);
-                console.log(image_b64)
-            }
+            
 
             try {
                 axios.post(registerLink, data).then(response => {
@@ -426,15 +451,19 @@ export default {
 
 
 
-        onChange(image) {
-            console.log('New picture selected!')
-            if (image) {
-                console.log('Picture loaded.')
-                this.formData.picture = image
-            } else {
-                console.log('FileReader API not supported: use the <form>, Luke!')
-            }
-        },
+       
+
+            
+        onChange (image) {
+      console.log('New picture selected!')
+      if (image) {
+        console.log('Picture loaded.')
+        this.image = image
+      } else {
+        console.log('FileReader API not supported: use the <form>, Luke!')
+      }
+    } ,
+       
 
         fetchCountries() {
             this.countries = countryList;
