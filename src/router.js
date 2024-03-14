@@ -64,8 +64,9 @@ export default new Router({
                 header: { page: "home" }
             }
         },
+        
         {
-            path: "/profile",
+            path: "/profile/",
             name: "profile",
             components: {
                 header: AppHeader,
@@ -73,7 +74,7 @@ export default new Router({
                 footer: AppFooter
             },
             props: {
-                header: { page: "lgin" }
+                props: (route) => ({ id: route.query.id })
             }
         },
 

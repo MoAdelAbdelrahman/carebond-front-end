@@ -17,7 +17,7 @@
     <cardprofile
         v-for="profile in profiles"
         :key="profile.id"
-        :id="profile.id"
+        :id="profile.user"
         :profileImagePath="profile.image"
         :profileName="profile.first_name + ' ' + profile.last_name" 
         :position="profile.occupation"

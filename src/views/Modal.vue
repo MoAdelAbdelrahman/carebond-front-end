@@ -7,7 +7,7 @@
     </div>
     <div v-for="timePair in times" :key="timePair.id" class="mb-3">
     <base-button block type="warning" @click="bookAppointment(timePair)" >
-        {{ timePair.from }} - {{ timePair.to }}
+        {{ timePair.start_time }} - {{ timePair.end_time }}
     </base-button>
 </div>
 
@@ -34,6 +34,7 @@ export default {
     name: "YourComponentName",
     props: {
         name: String,
+        times: Array,
     },
     data() {
         return {
@@ -42,18 +43,14 @@ export default {
                 modal2: false,
             },
 
-            times: [
-            { id: 1, from: "Tuesday 1:00AM", to: "Tuesday 1:00AM" }, 
-            { id: 2, from:  "Wedensday 2:00PM", to:  "Wedensday 2:00AM" }, 
-            
-        ],
+        
             
         };
     },
     methods:
     {
         bookAppointment(timePair) {
-    this.bookingMessage = `Booked with ${this.name} at ${timePair.from} - ${timePair.to}. You should receive a confirmation email shortly.`;
+    this.bookingMessage = `Booked with ${this.name} at ${timePair.start_time} - ${timePair.end_time}. You should receive a confirmation email shortly.`;
     this.modals.modal2 = true;
 
     this.$nextTick(() => {

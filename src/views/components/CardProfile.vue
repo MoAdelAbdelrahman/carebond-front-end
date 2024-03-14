@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="text-center mt-4">
                                     
-                                        <base-button class="btn-primary" @onClick="ViewPorfileHandler">View Profile</base-button>
+                                    <button class="btn btn-primary" @click="ViewProfileHandler(id)">View Profile</button>
                                     
                                 </div>
                             </div>
@@ -44,8 +44,13 @@
 <script>
 export default {
     methods: {
-        ViewPorfileHandler() {
-            console.log("View Profile Clicked") 
+        ViewProfileHandler(profileId) {
+            this.$router.push({ path: '/profile', query: { id: profileId } });
+    }   
+    },
+    data() {
+        return {
+            
         }
     },
     name: "CardProfile",

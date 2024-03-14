@@ -19,7 +19,7 @@
                             <div class="col-lg-3 order-lg-2">
                                 <div class="card-profile-image">
                                     <a href="#">
-                                        <img v-lazy="picture_" class="rounded-circle">
+                                        <img v-lazy="picture" class="rounded-circle">
                                     </a>
                                 </div>
                             </div>
@@ -29,19 +29,19 @@
                                   
                             </div>
                             <div>
-                                <Modal v-if="showModal" :name="name" @close="toggleModal"></Modal>
+                                <Modal v-if="showModal" :times="times" :name="name" @close="toggleModal"></Modal>
 
                             </div>
                             </div>
                             <div class="col-lg-4 order-lg-1">
                                 <div class="card-profile-stats d-flex justify-content-center">
                                     <div>
-                                        <span class="heading">{{clientsCount_}}</span>
+                                        <span class="heading">{{clientsCount}}</span>
                                         <span class="description">Clients</span>
                                     </div>
 
                                     <div>
-                                        <span class="heading">{{rating_}}</span>
+                                        <span class="heading">{{rating}}</span>
                                         <span class="description">Rating</span>
                                     </div>
                                 </div>
@@ -49,16 +49,16 @@
                         </div>
                         <div class="text-center mt-5">
                             <h3>{{name}}
-                                <span class="font-weight-light">{{age_}}</span>
+                                <span class="font-weight-light">{{age}}</span>
                             </h3>
                             <div class="h6 font-weight-300"><i class="ni location_pin mr-2"></i>Edmonton, Canada</div>
-                            <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{postion_}} </div>
+                            <div class="h6 mt-4"><i class="ni business_briefcase-24 mr-2"></i>{{postion}} </div>
 
                         </div>
                         <div class="mt-5 py-5 border-top text-center">
                             <div class="row justify-content-center">
                                 <div class="col-lg-9">
-                                    <p>{{description_}}</p>
+                                    <p>{{description}}</p>
                                 </div>
                             </div>
                         </div>
@@ -71,53 +71,35 @@
 
 <script>
 import Modal from './Modal.vue';
+import axios from 'axios';
 
 export default {
-    name: "Profile",
-    props: {
-        picture: {
-            type: String,
-            required: true
-        },
-        name: {
-            type: String,
-            required: true
-        },
-        clientsCount: {
-            type: Number,
-            required: true
-        },
-        rating: {
-            type: Number,
-            required: true
-        },
-        age: {
-            type: Number,
-            required: true
-        },
-        postion: {
-            type: String,
-            required: true
-        },
-        description: {
-            type: String,
-            required: true
-        }
+    mounted() {
+        
+        this.fetchProfile(this.$route.query.id);
+        this.fetchSechdule(this.$route.query.id);
+        
+        console.log(this.times);
     },
+
+
+    name: "Profile",
+    
     data(){
         return{
             
-            picture_: props.picture,
-            name_: props.name,
-            clientsCount_: props.clientsCount,
-            rating_: props.rating,
-            age_: props.age,
-            postion_: props.postion,
-            description_: props.description,
+            picture: '',
+            name:  '',
+            clientsCount:  '',
+            rating:    '',
+            age:    '',
+            postion: '',
+            description: '',
             showModal: false,
             buttonType: "primary",
             showBookingConfirmationModal: false,
             bookingMessage: '',
+            times: [],
         }
     },
     components:{
@@ -129,7 +111,33 @@ export default {
         this.buttonType = this.buttonType === 'primary' ? 'secondary' : 'primary';
         
     },
+    async fetchProfile(id) {
+        await axios.get(`https://sbeve.mooo.com/api/profile/${id}`)
+            .then(response => {
+                this.picture = response.data.image;
+                this.name = response.data.first_name + ' ' + response.data.last_name;
+                this.clientsCount = response.data.client_count;
+                this.rating = response.data.rating;
+                this.age = response.data.age;
+                this.postion = response.data.occupation;
+                this.description = response.data.biography;
+            })
+            .catch(error => {
+                console.log(error)
+            })
     
+    },
+    async fetchSechdule(id) {
+        await axios.get(`https://sbeve.mooo.com/api/schedule/${id}`)
+            .then(response => {
+                this.times = response.data;
+                console.log(response.data)
+                console.log('getting times  ' + this.times)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+},
     }
     
 };
