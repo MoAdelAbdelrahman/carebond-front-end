@@ -136,11 +136,11 @@
                     <label>Please add a formal picture <h3 class="text-muted"></h3></label>
 
                     <div class="pic">
-                        <picture-input v-model="formData.picture" ref="formData.picture" width="300" height="300"
-                            margin="16" accept="image/jpeg,image/png" size="10" button-class="btn" :custom-strings="{
+                        <picture-input ref="pictureInput" width="300" height="300" margin="16"
+                            accept="image/jpeg,image/png" size="10" :removable="true" :customStrings="{
                     upload: '<h1>Bummer!</h1>',
-                    drag: 'Upload a formal picture'
-                }" @change="onChange">
+                    drag: 'Select a picture 😺',
+                }">
                         </picture-input>
                     </div>
 
@@ -162,8 +162,9 @@
                 </div>
                 <div v-if="currentPage === 4">
                     <div class="text-center">
-                        <i class="ni ni-satisfied ni-3x"></i>
-                        <h1 class="font-bold text-3xl">Thank you for registering!</h1>
+                        <i class="ni ni-badge ni-3x"></i>
+                        <h1 class="font-bold text-3xl">Thank you for registering! Your information is pending approval</h1>
+                        <h5 class="font-bold text-3xl">You'll recieve an email upon approval.</h5>
                     </div>
                 </div>
             </div>
@@ -180,7 +181,10 @@ const { countryList } = require('./static-data/countries.js');
 import Multiselect from 'vue-multiselect'
 
 import 'vue-multiselect/dist/vue-multiselect.min.css';
+import axios from 'axios';
 
+
+const url = 'https://sbeve.mooo.com/api/'
 
 const isEmptyOrSpaces = (str) => {
     return str === null || str.match(/^ *$/) !== null;
@@ -317,7 +321,9 @@ export default {
                 biography: '',
                 picture: PictureInput,
             },
-
+            
+            base64_img: '',
+            
             validField: {
                 firstName: true,
                 lastName: true,
@@ -361,20 +367,63 @@ export default {
         handleFileUpload(event) {
             this.formData.picture = event.target.files[0];
         },
-        submitForm() {
-            console.log(this.formData);
+        async submitForm() {
             //backend shit
-
-            this.currentPage = 4;
-            this.progressValue = 100;
+            this.base64_img = this.$refs.pictureInput.image;
+            this.formData.personalityScores = this.formData.personalityScores.map(element => parseInt(element));
+            await this.fetchApi();
         },
-        onChange(image) {
-            console.log('New picture selected!')
-            if (image) {
-                console.log('Picture loaded.')
-                this.formData.picture = image
-            } else {
-                console.log('FileReader API not supported: use the <form>, Luke!')
+
+        async fetchApi() {
+            const registerLink = url + 'register/';
+            const currentDate = new Date();
+            var dateOfBirth = new Date(this.formData.dateOfBirth)
+            var data = {
+                username: this.formData.email,
+                first_name: this.formData.firstName,
+                last_name: this.formData.lastName,
+                nickname: this.formData.nickname,
+                nationality: this.formData.nationality,
+                address: this.formData.address,
+                biography: this.formData.biography,
+                user_type: 'nurse',
+                occupation: this.formData.position,
+                age: parseInt(currentDate.getUTCFullYear()) - parseInt(dateOfBirth.getUTCFullYear()),
+                address: this.formData.address,
+                date_of_birth: this.formData.dateOfBirth,
+                personality_traits: this.formData.personalityScores,
+                password: this.formData.password,
+                gender: this.formData.gender,
+            }
+
+            try {
+                axios.post(registerLink, data).then(response => {
+                    var token = response.data.token;
+                    // upload picture, if any
+                    if (this.base64_img) {
+                        const config = {
+                            headers: {
+                                'content-type': 'application/json',
+                                'Authorization': 'Token ' + token
+                            }
+                        }
+                        axios.post(url + 'profile/image/', {
+                            image: this.base64_img
+                        }, config).then(response => {
+                            this.currentPage = 4;
+                            this.progressValue = 100;
+                            this.isLoading = false;
+                        }).catch(error => {
+                            console.log(error);
+                            this.registrationFailed = true;
+                        });
+                    console.log(response);
+                    }
+                });
+
+            } catch (error) {
+                console.error('Registration failed', error);
+                this.registrationFailed = true;
             }
         },
 

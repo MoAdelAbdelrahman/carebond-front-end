@@ -130,7 +130,7 @@
                         <picture-input ref="pictureInput" width="300" height="300" margin="16"
                             accept="image/jpeg,image/png" size="10" :removable="true" :customStrings="{
                     upload: '<h1>Bummer!</h1>',
-                    drag: 'Drag a 😺 GIF or GTFO',
+                    drag: 'Select a picture 😺',
                 }">
                         </picture-input>
 
@@ -364,11 +364,15 @@ export default {
         handleFileUpload(event) {
             this.formData.picture = event.target.files[0];
         },
-        submitForm() {
+        async submitForm() {
             this.isLoading = true;
             this.base64_img = this.$refs.pictureInput.image;
             this.formData.personalityScores = this.formData.personalityScores.map(element => parseInt(element));
-            this.fetchApi();
+            await this.fetchApi();
+            setTimeout(() => {
+                this.$router.push('/seniorHome');
+            }, 2000);
+            
         },
 
         async fetchApi() {
@@ -403,8 +407,8 @@ export default {
                                 'Authorization': 'Token ' + token
                             }
                         }
-                        axios.post(url + 'upload_picture/', {
-                            picture: this.base64_img
+                        axios.post(url + 'profile/image/', {
+                            image: this.base64_img
                         }, config).then(response => {
                             this.currentPage = 4;
                             this.progressValue = 100;

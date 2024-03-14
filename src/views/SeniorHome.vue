@@ -13,7 +13,7 @@
 
         <div class="container">
             <div class="row justify-content-center">
-                <cardprofile/>
+                <cardprofile />
             </div>
         </div>
     </section>
@@ -22,13 +22,29 @@
 <script>
 
 import cardprofile from './components/CardProfile.vue'
+import axios from 'axios'
 
 export default {
     name: 'SeniorHome',
-    data() {
-        'img/theme/pic.jpg'
-        return {
+    mounted(){
+        this.getProfiles();
+    },
 
+    methods: {
+        async getProfiles() {
+           await axios.get('https://sbeve.mooo.com/api/profile/list')
+                .then(response => {
+                    this.profiles = response.data;
+                    console.log(response.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+    },
+    data() {
+        return {
+            profiles: []
         }
     },
     components: {
