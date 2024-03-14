@@ -124,7 +124,7 @@
                 <!-- Third Page -->
                 <div v-if="currentPage === 3">
                     <form>
-                        <label>Biography <br>
+                        <label>Biography and Medical Conditions<br>
                             <span class="text-muted">Tell us more about yourself, this will help us find you the best
                                 provider!</span></label>
                         <textarea class="form-control form-control-alternative" rows="3"

@@ -12,9 +12,20 @@
         </div>
 
         <div class="container">
+            
             <div class="row justify-content-center">
-                <cardprofile />
-            </div>
+    <cardprofile
+        v-for="profile in profiles"
+        :key="profile.id"
+        :id="profile.id"
+        :profileImagePath="profile.image"
+        :profileName="profile.first_name + ' ' + profile.last_name" 
+        :position="profile.occupation"
+        :clientCount="profile.client_count"
+        :rating="profile.rating">
+    </cardprofile>
+</div>
+           
         </div>
     </section>
 </template>

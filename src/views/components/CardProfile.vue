@@ -28,9 +28,9 @@
                                     </div>
                                 </div>
                                 <div class="text-center mt-4">
-                                    <a href="#/profile">
-                                        <base-button class="btn-primary">View Profile</base-button>
-                                    </a>
+                                    
+                                        <base-button class="btn-primary" @onClick="ViewPorfileHandler">View Profile</base-button>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -43,8 +43,17 @@
 
 <script>
 export default {
+    methods: {
+        ViewPorfileHandler() {
+            console.log("View Profile Clicked") 
+        }
+    },
     name: "CardProfile",
     props: {
+        id: {
+            type: String,
+            required: true
+        },
         profileImagePath: {
             type: String,
             required: true
